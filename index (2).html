@@ -438,7 +438,12 @@
     });
     function flickTail() {
       var tailG = catWrap.querySelector('.tail-g');
-      tailG.classList.remove('flick'); void tailG.offsetWidth; tailG.classList.add('flick');
+      if (!tailG) return;
+      tailG.classList.remove('flick');
+      void tailG.offsetWidth;
+      tailG.classList.add('flick');
+      clearTimeout(tailG._flickTimer);
+      tailG._flickTimer = setTimeout(function () { tailG.classList.remove('flick'); }, 850);
     }
     catWrap.querySelector('.hit-ear').addEventListener('click', function () {
       flickTail();
@@ -600,13 +605,6 @@
     });
   }
 
- // 16 score (slider) -> 4 ranges, each with its own popup
-  S['16'] = { dot: 16, title: 'ช่วยบอกผมทีว่าชอบแค่ไหน จาก 1-100?', score: true, mood: 'idle' };
-  pop('16-a', '16', 16, 'ชอบน้อยๆแต่ชอบนานๆก็ได้นะครับ ☺️', '17');            // 0-25
-  pop('16-b', '16', 16, 'แบบนี้แปลว่าตกหลุมลงมาข้างนึงละนะ 🤭', '17');       // 26-50
-  pop('16-c', '16', 16, 'อีกครึ่งนึงจะลงมาตอนไหนครับ ให้ช่วยดึงไหม 😳', '17');           // 51-75
-  pop('16-d', '16', 16, 'หลวมตัวลงมาแล้ว ไม่ให้ขึ้นไปแล้วนะครับ 😳', '17');               // 76-100
-  
   /* ================= PAGE 4: แมวมาอ้อนก่อนพูดความในใจ ================= */
   function renderPlead() {
     updateStep(4);
@@ -627,6 +625,8 @@
       tailG.classList.remove('flick');
       void tailG.offsetWidth;
       tailG.classList.add('flick');
+      clearTimeout(tailG._flickTimer);
+      tailG._flickTimer = setTimeout(function () { tailG.classList.remove('flick'); }, 850);
     }
     catWrap.querySelector('.hit-head').addEventListener('click', function () {
       flickPleadTail();
